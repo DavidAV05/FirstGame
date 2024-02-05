@@ -1,3 +1,15 @@
-[gd_scene format=3 uid="uid://ba1hhrglyqyqy"]
+[gd_scene load_steps=2 format=3 uid="uid://0fkikv6sbgbe"]
 
-[node name="Menu" type="Node2D"]
+[ext_resource type="Script" path="res://game/menus/Button.gd" id="1_qki5o"]
+
+[node name="mainMenu" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Button" type="Button" parent="."]
+offset_left = 320.0
+offset_top = 64.0
+offset_right = 768.0
+offset_bottom = 256.0
+text = "Mogus"
+script = ExtResource("1_qki5o")
