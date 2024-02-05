@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://qxcj4ajltyrs"]
+
+[ext_resource type="Script" path="res://game/world/levels/level1/Void.gd" id="1_41fup"]
+[ext_resource type="PackedScene" uid="uid://bwe8b1isyf17s" path="res://game/player/player.tscn" id="1_rsupv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yals0"]
+size = Vector2(775.161, 24.0729)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5yjjg"]
+size = Vector2(1408, 128)
+
+[node name="Level1" type="Node2D"]
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Objects"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/StaticBody2D"]
+position = Vector2(0, 160)
+scale = Vector2(1.65127, 2.65859)
+shape = SubResource("RectangleShape2D_yals0")
+
+[node name="Panel" type="Panel" parent="Objects/StaticBody2D"]
+offset_left = -640.0
+offset_top = 128.0
+offset_right = 640.0
+offset_bottom = 192.0
+
+[node name="Void" type="Area2D" parent="Objects"]
+position = Vector2(64, 384)
+script = ExtResource("1_41fup")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Void"]
+shape = SubResource("RectangleShape2D_5yjjg")
+
+[node name="Panel" type="Panel" parent="Objects/Void"]
+offset_left = -704.0
+offset_top = -64.0
+offset_right = 704.0
+offset_bottom = 64.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Respawn_timer" type="Timer" parent="Objects/Void"]
+
+[node name="player" parent="." instance=ExtResource("1_rsupv")]
+position = Vector2(0, 0)
+
+[connection signal="body_entered" from="Objects/Void" to="Objects/Void" method="_on_body_entered"]
