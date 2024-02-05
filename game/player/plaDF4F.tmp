@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bwe8b1isyf17s"]
 
-[ext_resource type="Script" path="res://game/player.gd" id="1_h1qef"]
+[ext_resource type="Script" path="res://game/player/player.gd" id="1_h1qef"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ielvk"]
 size = Vector2(16, 16)
@@ -15,11 +15,14 @@ gradient = SubResource("Gradient_7dwd4")
 position = Vector2(80, 72)
 script = ExtResource("1_h1qef")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+editor_draw_limits = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ielvk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.0625, 16)
 texture = SubResource("GradientTexture1D_h41op")
-
-[node name="Camera2D" type="Camera2D" parent="."]
