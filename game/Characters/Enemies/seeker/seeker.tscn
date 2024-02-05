@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://clbqu0va2qca7"]
+
+[ext_resource type="Script" path="res://game/Characters/Enemies/seeker/seeker.gd" id="1_1u86w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8jlwo"]
+size = Vector2(64, 64)
+
+[sub_resource type="Gradient" id="Gradient_df78g"]
+colors = PackedColorArray(0.827451, 0, 0, 1, 0.50116, 0, 0.125614, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4neps"]
+gradient = SubResource("Gradient_df78g")
+fill_from = Vector2(0.573394, 0.5)
+fill_to = Vector2(0.380734, 0.087156)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0b51o"]
+size = Vector2(80, 80)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hraui"]
+radius = 336.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4mdva"]
+radius = 544.0
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(32, 32)
+script = ExtResource("1_1u86w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8jlwo")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_4neps")
+
+[node name="LethalCollision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LethalCollision"]
+shape = SubResource("RectangleShape2D_0b51o")
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+scale = Vector2(1.5, 1)
+shape = SubResource("CircleShape2D_hraui")
+
+[node name="PlayerChaseArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerChaseArea"]
+scale = Vector2(1.5, 1)
+shape = SubResource("CircleShape2D_4mdva")
+
+[connection signal="body_entered" from="LethalCollision" to="." method="_on_lethal_collision_body_entered"]
+[connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
+[connection signal="body_exited" from="PlayerChaseArea" to="." method="_on_player_chase_area_body_exited"]

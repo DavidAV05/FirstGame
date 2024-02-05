@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-const SPEED = 500.0
-const JUMP_VELOCITY = -400.0
+const SPEED = 800.0
+const JUMP_VELOCITY = -900.0
 
 var dash = true
 @onready var dash_timer = $dash_timer
@@ -19,7 +19,7 @@ var TERMINAL_VELOCITY = gravity * 3
 # Handles all the basic horizontal movement
 func move_horizontal (direction):
 	# Checks if player is walking
-	velocity.x = move_toward(velocity.x, SPEED * direction, SPEED / 20)
+	velocity.x = move_toward(velocity.x, SPEED * direction, SPEED / 10)
 
 
 
@@ -38,7 +38,7 @@ func dash_func(direction):
 			velocity.y = -JUMP_VELOCITY * 1.5
 		# Define dash right and left
 		else:
-			velocity.x = SPEED * 2 * direction
+			velocity.x = SPEED * 3 * direction
 
 	dash = false
 

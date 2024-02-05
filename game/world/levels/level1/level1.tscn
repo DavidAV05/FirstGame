@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://qxcj4ajltyrs"]
+[gd_scene load_steps=6 format=3 uid="uid://qxcj4ajltyrs"]
 
 [ext_resource type="Script" path="res://game/world/levels/level1/Void.gd" id="1_41fup"]
-[ext_resource type="PackedScene" uid="uid://bwe8b1isyf17s" path="res://game/player/player.tscn" id="1_rsupv"]
+[ext_resource type="PackedScene" uid="uid://bwe8b1isyf17s" path="res://game/Characters/player/player.tscn" id="1_rsupv"]
+[ext_resource type="PackedScene" uid="uid://clbqu0va2qca7" path="res://game/Characters/Enemies/seeker/seeker.tscn" id="3_7qasc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yals0"]
 size = Vector2(775.161, 24.0729)
@@ -44,5 +45,8 @@ metadata/_edit_use_anchors_ = true
 
 [node name="player" parent="." instance=ExtResource("1_rsupv")]
 position = Vector2(0, 0)
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("3_7qasc")]
+position = Vector2(392, 32)
 
 [connection signal="body_entered" from="Objects/Void" to="Objects/Void" method="_on_body_entered"]

@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bwe8b1isyf17s"]
 
-[ext_resource type="Script" path="res://game/player/player.gd" id="1_h1qef"]
+[ext_resource type="Script" path="res://game/Characters/player/player.gd" id="1_h1qef"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ielvk"]
-size = Vector2(16, 16)
+size = Vector2(32, 32)
 
 [sub_resource type="Gradient" id="Gradient_7dwd4"]
 colors = PackedColorArray(0.38214, 0.698672, 0.850917, 1, 0.417609, 0.706196, 0.55294, 1)
@@ -12,11 +12,10 @@ colors = PackedColorArray(0.38214, 0.698672, 0.850917, 1, 0.417609, 0.706196, 0.
 gradient = SubResource("Gradient_7dwd4")
 
 [node name="player" type="CharacterBody2D"]
-position = Vector2(80, 72)
+position = Vector2(16, 16)
 script = ExtResource("1_h1qef")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.25, 1.25)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 editor_draw_limits = true
@@ -25,7 +24,8 @@ editor_draw_limits = true
 shape = SubResource("RectangleShape2D_ielvk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.0625, 16)
+position = Vector2(1.90735e-06, -1.90735e-06)
+scale = Vector2(0.125, 32)
 texture = SubResource("GradientTexture1D_h41op")
 
 [node name="dash_timer" type="Timer" parent="."]
