@@ -11,9 +11,15 @@ config_version=5
 [application]
 
 config/name="FirstGame"
-run/main_scene="res://game/menus/main_menu.tscn"
+run/main_scene="res://game/Menus/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/size/mode=2
 
 [input]
 
@@ -61,3 +67,7 @@ dash={
 [physics]
 
 2d/default_gravity=1960.0
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
