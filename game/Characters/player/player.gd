@@ -1,11 +1,15 @@
 extends CharacterBody2D
 
-const SPEED = 400.0
-const JUMP_VELOCITY = -700.0
+const SPEED = 200.0
+const JUMP_VELOCITY = -500.0
 
+# Dash variables
 var dash = true
 @onready var dash_timer = $dash_timer
 const dash_cooldown = .5
+
+# Jump variables
+@onready var coyote_timer = $coyote_timer
 
 # Gets all the camera variables
 @onready var camera = $Camera2D
@@ -20,8 +24,6 @@ var TERMINAL_VELOCITY = gravity * 3
 func move_horizontal (direction):
 	# Checks if player is walking
 	velocity.x = move_toward(velocity.x, SPEED * direction, SPEED / 10)
-
-
 
 # Handles all the dash abilities
 func dash_func(direction):
@@ -42,19 +44,34 @@ func dash_func(direction):
 
 	dash = false
 
+# Handles jump input, check next to gravity for coyote timer
+func jump_func():
+	if is_on_floor() or !coyote_timer.is_stopped():
+		velocity.y = JUMP_VELOCITY
 
+# Handles coyote timer
+func _on_coyote_timer_timeout():
+	pass
 
 func _physics_process(delta):
 	move_and_slide()
+	print(coyote_timer.is_stopped())
+	
 
 	# Add the gravity and dash "recharge".
 	if !is_on_floor() and velocity.y <= TERMINAL_VELOCITY:
+		# Gravity
 		velocity.y += gravity * delta
 	else:
 		dash = true
 
+
 	# Gets direction
 	var direction = Input.get_axis("move_left", "move_right")
+
+	# Handle jump.
+	if Input.is_action_just_pressed("jump"):
+		jump_func()
 
 	# Handle the horizontal movement/deceleration.
 	move_horizontal(direction)
@@ -63,13 +80,10 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("dash") and dash == true:
 		dash_func(direction)
 
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
 
 
 
-func death(start_position : Vector2):
+func death(start_position: Vector2):
 	# Disable camera lag and velocity.
 	camera_lag = false
 	velocity = Vector2(0, 0)
@@ -79,4 +93,3 @@ func death(start_position : Vector2):
 	
 	# Enable camera lag again.
 	camera_lag_speed = true
-
