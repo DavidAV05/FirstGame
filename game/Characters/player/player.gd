@@ -6,10 +6,12 @@ const JUMP_VELOCITY = -500.0
 # Dash variables
 var dash = true
 @onready var dash_timer = $dash_timer
+# * See wait time in _ready
 const dash_cooldown = .5
 
 # Jump variables
 @onready var coyote_timer = $coyote_timer
+var can_jump = true
 
 # Gets all the camera variables
 @onready var camera = $Camera2D
@@ -19,6 +21,9 @@ const dash_cooldown = .5
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var TERMINAL_VELOCITY = gravity * 3
+
+func _ready():
+	coyote_timer.wait_time = 1
 
 # Handles all the basic horizontal movement
 func move_horizontal (direction):
@@ -46,23 +51,30 @@ func dash_func(direction):
 
 # Handles jump input, check next to gravity for coyote timer
 func jump_func():
-	if is_on_floor() or !coyote_timer.is_stopped():
+	if can_jump:
+		can_jump = false
 		velocity.y = JUMP_VELOCITY
 
 # Handles coyote timer
 func _on_coyote_timer_timeout():
-	pass
+	can_jump = false
 
 func _physics_process(delta):
 	move_and_slide()
-	print(coyote_timer.is_stopped())
+	print("Timer stopped: ", coyote_timer.is_stopped())
+	print("Can jump: ", can_jump)
 	
 
 	# Add the gravity and dash "recharge".
 	if !is_on_floor() and velocity.y <= TERMINAL_VELOCITY:
 		# Gravity
 		velocity.y += gravity * delta
+		
+		if coyote_timer.is_stopped():
+			coyote_timer.start()
 	else:
+		coyote_timer.stop()
+		can_jump = true
 		dash = true
 
 

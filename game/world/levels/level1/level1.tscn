@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://qxcj4ajltyrs"]
 
 [ext_resource type="Script" path="res://game/World/Levels/Level1/Void.gd" id="1_41fup"]
-[ext_resource type="PackedScene" uid="uid://bwe8b1isyf17s" path="res://game/Characters/Player/player.tscn" id="1_rsupv"]
+[ext_resource type="PackedScene" uid="uid://bwe8b1isyf17s" path="res://game/Characters/player/player.tscn" id="1_rsupv"]
 [ext_resource type="Texture2D" uid="uid://cobxnnp2njlge" path="res://assets/Tilemaps/Test maps/test_green.png" id="4_4217v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yals0"]
