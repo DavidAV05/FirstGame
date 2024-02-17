@@ -1,16 +1,17 @@
 extends CharacterBody2D
 
-const SPEED = 200.0
-const JUMP_VELOCITY = -500.0
+@export var SPEED = 200.0
+@export var JUMP_VELOCITY = -500.0
+@export var WALL_SLIDE_SPEED = 100
 
 # Dash variables
 var dash = true
 @onready var dash_timer = $dash_timer
-# * See wait time in _ready
-const dash_cooldown = .5
+@export var DASH_COOLDOWN = .5
 
 # Jump variables
 @onready var coyote_timer = $coyote_timer
+@export var COYOTE_COOLDOWN = .1
 var can_jump = true
 
 # Gets all the camera variables
@@ -22,9 +23,6 @@ var can_jump = true
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var TERMINAL_VELOCITY = gravity * 3
 
-func _ready():
-	coyote_timer.wait_time = 1
-
 # Handles all the basic horizontal movement
 func move_horizontal (direction):
 	# Checks if player is walking
@@ -35,7 +33,7 @@ func dash_func(direction):
 	# Checks if dashing is not activated
 	if dash_timer.is_stopped():
 		# Starts timer
-		dash_timer.wait_time = dash_cooldown
+		dash_timer.wait_time = DASH_COOLDOWN
 		dash_timer.start()
 		# Define dash up
 		if Input.is_action_pressed("move_up"):
@@ -45,6 +43,7 @@ func dash_func(direction):
 			velocity.y = -JUMP_VELOCITY * 1.5
 		# Define dash right and left
 		else:
+			velocity.y = JUMP_VELOCITY * 0.75
 			velocity.x = SPEED * 3 * direction
 
 	dash = false
@@ -57,23 +56,28 @@ func jump_func():
 
 # Handles coyote timer
 func _on_coyote_timer_timeout():
+	print("Timed out")
 	can_jump = false
 
 func _physics_process(delta):
 	move_and_slide()
-	print("Timer stopped: ", coyote_timer.is_stopped())
-	print("Can jump: ", can_jump)
 	
 
 	# Add the gravity and dash "recharge".
 	if !is_on_floor() and velocity.y <= TERMINAL_VELOCITY:
 		# Gravity
-		velocity.y += gravity * delta
+		if velocity.y < 0 and !is_on_wall():
+			velocity.y += gravity * delta
+		elif is_on_wall() and velocity.y > 0:
+			velocity.y = move_toward(velocity.y, WALL_SLIDE_SPEED, abs(delta * velocity.y * 5))
+		else:
+			velocity.y += gravity * delta * 1.5
 		
 		if coyote_timer.is_stopped():
 			coyote_timer.start()
 	else:
 		coyote_timer.stop()
+		coyote_timer.wait_time = COYOTE_COOLDOWN
 		can_jump = true
 		dash = true
 
