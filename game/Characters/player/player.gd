@@ -2,17 +2,14 @@ extends CharacterBody2D
 
 @export var SPEED = 200.0
 @export var JUMP_VELOCITY = -500.0
-@export var WALL_SLIDE_SPEED = 100
+@export var WALL_CLIMB_SPEED = 300
 
 # Dash variables
-var dash = true
-@onready var dash_timer = $dash_timer
+@onready var dash_timer = $DashTimer
 @export var DASH_COOLDOWN = .5
 
-# Jump variables
-@onready var coyote_timer = $coyote_timer
-@export var COYOTE_COOLDOWN = .1
-var can_jump = true
+# Coyote variables
+@onready var Coyote_Jump = $CoyoteJump
 
 # Gets all the camera variables
 @onready var camera = $Camera2D
@@ -23,15 +20,49 @@ var can_jump = true
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var TERMINAL_VELOCITY = gravity * 3
 
+func gravity_func(delta: float, on_floor: bool, on_wall: bool) -> void:
+	if !on_floor and !on_wall and velocity.y <= 0:
+		velocity.y += gravity * delta
+	elif !on_floor and !on_wall and velocity.y < TERMINAL_VELOCITY:
+		velocity.y += gravity * delta * 1.25
+
 # Handles all the basic horizontal movement
-func move_horizontal (direction):
+func move_horizontal(direction: int) -> void:
 	# Checks if player is walking
 	velocity.x = move_toward(velocity.x, SPEED * direction, SPEED / 10)
 
+# Handles jump input, check next to gravity for coyote timer
+func jump_func(can_jump: bool) -> void:
+	if can_jump:
+		can_jump = false
+		velocity.y = JUMP_VELOCITY
+
+# Handles the wall sliding of character.
+func wall_slide_func(delta: float, on_floor: bool, on_wall: bool) -> void:
+	var direction := 0
+	var climbing := 1
+	if velocity.y >= 0:
+		direction = 1
+	else:
+		direction = -1	
+	
+	if  Input.is_action_pressed("jump"):
+		direction = 0
+		climbing = 1.5
+
+	if on_wall:
+		print(WALL_CLIMB_SPEED * direction)
+		print(WALL_CLIMB_SPEED * delta * .5)
+		velocity.y = move_toward(velocity.y,
+			WALL_CLIMB_SPEED * direction, 
+			WALL_CLIMB_SPEED * delta * 2 * climbing)
+
 # Handles all the dash abilities
-func dash_func(direction):
+func dash_func	(dash: bool, direction: int, on_floor: int) -> void:
+	if on_floor:
+		dash = true
 	# Checks if dashing is not activated
-	if dash_timer.is_stopped():
+	if dash_timer.is_stopped() and dash == true:
 		# Starts timer
 		dash_timer.wait_time = DASH_COOLDOWN
 		dash_timer.start()
@@ -48,58 +79,36 @@ func dash_func(direction):
 
 	dash = false
 
-# Handles jump input, check next to gravity for coyote timer
-func jump_func():
-	if can_jump:
-		can_jump = false
-		velocity.y = JUMP_VELOCITY
-
-# Handles coyote timer
-func _on_coyote_timer_timeout():
-	print("Timed out")
-	can_jump = false
-
 func _physics_process(delta):
-	move_and_slide()
+	var on_floor = is_on_floor()
+	var on_wall = is_on_wall_only()
+	var dash: bool = true;
+
+	# Handles gravity
+	gravity_func(delta, on_floor, on_wall)
 	
-
-	# Add the gravity and dash "recharge".
-	if !is_on_floor() and velocity.y <= TERMINAL_VELOCITY:
-		# Gravity
-		if velocity.y < 0 and !is_on_wall():
-			velocity.y += gravity * delta
-		elif is_on_wall() and velocity.y > 0:
-			velocity.y = move_toward(velocity.y, WALL_SLIDE_SPEED, abs(delta * velocity.y * 5))
-		else:
-			velocity.y += gravity * delta * 1.5
-		
-		if coyote_timer.is_stopped():
-			coyote_timer.start()
-	else:
-		coyote_timer.stop()
-		coyote_timer.wait_time = COYOTE_COOLDOWN
-		can_jump = true
-		dash = true
-
-
+	# Handles coyote timer
+	Coyote_Jump.can_jump_handler(on_floor)
+	
 	# Gets direction
 	var direction = Input.get_axis("move_left", "move_right")
 
-	# Handle jump.
-	if Input.is_action_just_pressed("jump"):
-		jump_func()
-
 	# Handle the horizontal movement/deceleration.
 	move_horizontal(direction)
-		
+
+	# Handle jump.
+	if Input.is_action_just_pressed("jump"):
+		jump_func(Coyote_Jump.get_can_jump())
+	
+	wall_slide_func(delta, on_floor, on_wall)
+
 	# Handles dashing
-	if Input.is_action_just_pressed("dash") and dash == true:
-		dash_func(direction)
+	if Input.is_action_just_pressed("dash"):
+		dash_func(dash, direction, on_floor)
+	
+	move_and_slide()
 
-
-
-
-func death(start_position: Vector2):
+func death(start_position: Vector2) -> void:
 	# Disable camera lag and velocity.
 	camera_lag = false
 	velocity = Vector2(0, 0)

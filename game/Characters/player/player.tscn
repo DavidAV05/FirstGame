@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwe8b1isyf17s"]
+[gd_scene load_steps=6 format=3 uid="uid://bwe8b1isyf17s"]
 
 [ext_resource type="Script" path="res://game/Characters/player/player.gd" id="1_h1qef"]
+[ext_resource type="Script" path="res://game/Characters/player/Coyote_jump.gd" id="2_l7qx6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_js6aq"]
 size = Vector2(16, 16)
@@ -28,11 +29,14 @@ shape = SubResource("RectangleShape2D_js6aq")
 scale = Vector2(0.0625, 16)
 texture = SubResource("GradientTexture1D_h41op")
 
-[node name="dash_timer" type="Timer" parent="."]
+[node name="DashTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="coyote_timer" type="Timer" parent="."]
+[node name="CoyoteJump" type="Node2D" parent="."]
+script = ExtResource("2_l7qx6")
+
+[node name="CoyoteTimer" type="Timer" parent="CoyoteJump"]
 wait_time = 0.1
 one_shot = true
 
-[connection signal="timeout" from="coyote_timer" to="." method="_on_coyote_timer_timeout"]
+[connection signal="timeout" from="CoyoteJump/CoyoteTimer" to="CoyoteJump" method="_on_coyote_timer_timeout"]
