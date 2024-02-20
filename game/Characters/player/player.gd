@@ -65,13 +65,13 @@ func wall_climb_func(delta: float, on_floor: bool) -> void:
 	if abs(velocity.y) > abs(WALL_CLIMB_SPEED):
 		velocity.y = move_toward(velocity.y, move_to, WALL_CLIMB_SPEED * delta * 18)
 	else:
-		velocity.y = move_toward(velocity.y, move_to, WALL_CLIMB_SPEED * delta * 6)
+		velocity.y = move_toward(velocity.y, move_to, WALL_CLIMB_SPEED * delta * 8)
 
 
 
 # Handles all the dash abilities
-func dash_func	(direction: int, on_floor: int) -> void:
-	if on_floor:
+func dash_func	(direction: int, on_floor: bool, on_wall: bool) -> void:
+	if on_floor or on_wall:
 		dash = true
 	# Checks if dashing is not activated
 	if dash_timer.is_stopped() and dash == true:
@@ -92,8 +92,8 @@ func dash_func	(direction: int, on_floor: int) -> void:
 	dash = false
 
 func _physics_process(delta):
-	var on_floor = is_on_floor()
-	var on_wall = is_on_wall()
+	var on_floor: bool = is_on_floor()
+	var on_wall: bool = is_on_wall()
 
 	# Handles gravity
 	gravity_func(delta, on_floor, on_wall)
@@ -121,7 +121,7 @@ func _physics_process(delta):
 
 	# Handles dashing
 	if Input.is_action_pressed("dash"):
-		dash_func(direction, on_floor)
+		dash_func(direction, on_floor, on_wall)
 	
 	move_and_slide()
 
