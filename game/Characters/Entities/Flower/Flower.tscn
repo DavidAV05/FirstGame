@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://cinfoh3omajt7"]
+
+[ext_resource type="Script" path="res://game/Characters/Entities/Flower/Pollenised.gd" id="2_0i0gt"]
+[ext_resource type="Script" path="res://game/Characters/Entities/Flower/FlowerStates.gd" id="2_jjdvn"]
+[ext_resource type="Script" path="res://game/Characters/Entities/Flower/Depollenised.gd" id="3_jo4og"]
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_qyx2u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8lpfa"]
+radius = 13.0384
+
+[node name="Flower" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(6, 4)
+scale = Vector2(-0.123879, -25.1815)
+texture = SubResource("CurveXYZTexture_qyx2u")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(6, 4)
+shape = SubResource("CircleShape2D_8lpfa")
+
+[node name="FlowerStates" type="Node2D" parent="." node_paths=PackedStringArray("INITIAL_STATE")]
+script = ExtResource("2_jjdvn")
+INITIAL_STATE = NodePath("Depollenised")
+
+[node name="Depollenised" type="Node2D" parent="FlowerStates"]
+script = ExtResource("3_jo4og")
+
+[node name="PolleniseTimer" type="Timer" parent="FlowerStates/Depollenised"]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="Pollenised" type="Node2D" parent="FlowerStates"]
+script = ExtResource("2_0i0gt")
+
+[connection signal="body_entered" from="Hitbox" to="FlowerStates/Pollenised" method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="FlowerStates/Depollenised/PolleniseTimer" to="FlowerStates/Depollenised" method="_on_pollenise_timer_timeout"]

@@ -1,19 +1,8 @@
 extends CharacterBody2D
 
-@export var SPEED := 200.0
-@export var JUMP_VELOCITY := -500.0
-@export var WALL_CLIMB_SPEED := 200.0
-
-# Global variables
-var dash: bool = true
-var climb_dir: int = 1
-
-# Coyote variables
-@onready var Coyote_Jump = %CoyoteJump
-
-# Dash variables
-@onready var dash_timer = %DashTimer
-@export var DASH_COOLDOWN = .5
+@export var SPEED := 1000.0
+@export var MAX_SPEED := 500
+@export var FRICTION_SPEED := 2
 
 # Gets all the camera variables
 @onready var camera = %Camera2D
@@ -24,106 +13,41 @@ var climb_dir: int = 1
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var TERMINAL_VELOCITY = gravity * 3
 
-func gravity_func(delta: float, on_floor: bool, on_wall: bool) -> void:
-	# When going upwards gravity:
-	if !on_floor and !on_wall and velocity.y <= 0:
-		velocity.y += gravity * delta
-	# When going downwards gravity:
-	elif !on_floor and !on_wall and velocity.y < TERMINAL_VELOCITY:
-		velocity.y += gravity * delta * 1.35
 
+func basic_movement(delta: float) -> void:
+	var direction_x = Input.get_axis("move_left", "move_right")
+	var direction_y = Input.get_axis("move_up", "move_down")
+	var direction = Vector2(direction_x, direction_y)
+	direction = direction.normalized()
 
+	var movement = direction * (SPEED * delta)
 
-# Handles all the basic horizontal movement
-func move_horizontal(direction: int) -> void:
-	# Checks if player is walking
-	velocity.x = move_toward(velocity.x, SPEED * direction, SPEED / 10)
+	velocity += movement
 
-
-
-# Handles jump input, check next to gravity for coyote timer
-func jump_func(can_jump: bool) -> void:
-	if can_jump:
-		can_jump = false
-		velocity.y = JUMP_VELOCITY
-
-
-
-# Handles the wall sliding of character.
-func wall_climb_func(delta: float, on_floor: bool) -> void:
-	# When walking against wall, start climbing
-	if on_floor:
-		climb_dir = -1
-		velocity.y -= float(WALL_CLIMB_SPEED) / 3
-	
-	# -1 is upwards, 1 is downwards
-	if Input.is_action_pressed("move_down") or Input.is_action_pressed("move_up"):
-		climb_dir = int(Input.get_axis("move_up", "move_down"))
-
-	var move_to: float = WALL_CLIMB_SPEED * climb_dir
-#
-	if abs(velocity.y) > abs(WALL_CLIMB_SPEED):
-		velocity.y = move_toward(velocity.y, move_to, WALL_CLIMB_SPEED * delta * 18)
+	if velocity.x < 0:
+		$Sprite.flip_h = true
 	else:
-		velocity.y = move_toward(velocity.y, move_to, WALL_CLIMB_SPEED * delta * 8)
+		$Sprite.flip_h = false
 
 
+func friction(delta: float) -> void:
+	var direction := velocity.normalized()
+	var friction := (direction * velocity.length() * delta) / 0.3
+	velocity -= friction
+	print(friction)
 
-# Handles all the dash abilities
-func dash_func	(direction: int, on_floor: bool, on_wall: bool) -> void:
-	if on_floor or on_wall:
-		dash = true
-	# Checks if dashing is not activated
-	if dash_timer.is_stopped() and dash == true:
-		# Starts timer
-		dash_timer.wait_time = DASH_COOLDOWN
-		dash_timer.start()
-		# Define dash up
-		if Input.is_action_pressed("move_up"):
-			velocity.y = JUMP_VELOCITY * 1.5
-		# Define dash down
-		elif Input.is_action_pressed("move_down"):
-			velocity.y = -JUMP_VELOCITY * 1.5
-		# Define dash right and left
-		else:
-			velocity.y = JUMP_VELOCITY * 0.75
-			velocity.x = SPEED * 3 * direction
 
-	dash = false
+func _physics_process(delta: float) -> void:
+	# Defining max speed
+	velocity = velocity.limit_length(MAX_SPEED)
 
-func _physics_process(delta):
-	var on_floor: bool = is_on_floor()
-	var on_wall: bool = is_on_wall()
-
-	# Handles gravity
-	gravity_func(delta, on_floor, on_wall)
+	if Input.is_action_pressed("move"):
+		basic_movement(delta)
 	
-	# Handles coyote timer
-	Coyote_Jump.can_jump_handler(on_floor)
-	
-	# Gets direction
-	var direction = Input.get_axis("move_left", "move_right")
+	friction(delta)
 
-	# Handle the horizontal movement/deceleration.
-	move_horizontal(direction)
-
-	#Handle jump.
-	if Input.is_action_pressed("jump"):
-		jump_func(Coyote_Jump.get_can_jump())
-	
-	if !on_wall:
-		if velocity.y > 0:
-			climb_dir = 1
-		else:
-			climb_dir = -1
-	if on_wall:
-		wall_climb_func(delta, on_floor)
-
-	# Handles dashing
-	if Input.is_action_pressed("dash"):
-		dash_func(direction, on_floor, on_wall)
-	
 	move_and_slide()
+
 
 func death(start_position: Vector2) -> void:
 	# Disable camera lag and velocity.
