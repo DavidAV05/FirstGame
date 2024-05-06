@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 @export var SPEED := 1000.0
 @export var MAX_SPEED := 500
@@ -8,6 +9,7 @@ extends CharacterBody2D
 @onready var camera = %Camera2D
 @onready var camera_lag = camera.position_smoothing_enabled
 @onready var camera_lag_speed = camera.position_smoothing_speed
+@onready var inventory : Inventory = %Inventory
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -39,6 +41,7 @@ func friction(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	# Defining max speed
+	print(inventory.pollen_count)
 	velocity = velocity.limit_length(MAX_SPEED)
 
 	if Input.is_action_pressed("move"):
@@ -47,6 +50,10 @@ func _physics_process(delta: float) -> void:
 	friction(delta)
 
 	move_and_slide()
+
+
+func signal_inventory(n_pollen: int):
+	inventory.add_pollen(n_pollen)
 
 
 func death(start_position: Vector2) -> void:

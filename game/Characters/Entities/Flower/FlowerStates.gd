@@ -40,4 +40,3 @@ func on_child_transition(old_state, new_state_name):
 	new_state.enter()
 	
 	CURRENT_STATE = new_state
-		

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://qxcj4ajltyrs"]
 
 [ext_resource type="Script" path="res://game/World/Levels/Level1/Void.gd" id="1_41fup"]
-[ext_resource type="PackedScene" uid="uid://bwe8b1isyf17s" path="res://game/Characters/Player/player.tscn" id="1_rsupv"]
+[ext_resource type="PackedScene" uid="uid://bwe8b1isyf17s" path="res://game/Characters/player/player.tscn" id="1_rsupv"]
 [ext_resource type="Texture2D" uid="uid://cobxnnp2njlge" path="res://assets/Tilemaps/Test maps/test_green.png" id="4_4217v"]
 [ext_resource type="PackedScene" uid="uid://cinfoh3omajt7" path="res://game/Characters/Entities/Flower/Flower.tscn" id="4_f8rci"]
 
@@ -74,7 +74,8 @@ texture = ExtResource("4_4217v")
 [sub_resource type="TileSet" id="TileSet_8s2hu"]
 tile_layout = 2
 tile_size = Vector2i(16, 15)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 0
 sources/2 = SubResource("TileSetAtlasSource_012ax")
 
 [node name="Level1" type="Node2D"]
@@ -83,6 +84,8 @@ sources/2 = SubResource("TileSetAtlasSource_012ax")
 
 [node name="Void" type="Area2D" parent="Objects"]
 position = Vector2(64, 384)
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_41fup")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Void"]
