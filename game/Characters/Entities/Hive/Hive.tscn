@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://uxbctsk1d6y4"]
+
+[sub_resource type="Gradient" id="Gradient_laep1"]
+colors = PackedColorArray(0.889662, 0.863943, 0.330651, 1, 0.818846, 0.664406, 0.178398, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h37bf"]
+gradient = SubResource("Gradient_laep1")
+
+[node name="Hive" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.90735e-06, 3.8147e-06)
+scale = Vector2(1, 256)
+texture = SubResource("GradientTexture1D_h37bf")
