@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://boabf7j6jjua0"]
+
+[ext_resource type="PackedScene" uid="uid://dbxyltyihki31" path="res://game/Components/Health/Health.tscn" id="1_13jvs"]
+[ext_resource type="Script" path="res://game/Characters/Entities/BeeEater/BeeEater.gd" id="1_82b2p"]
+[ext_resource type="PackedScene" uid="uid://bckwg6cwoskox" path="res://game/Components/PathFinding/PathFinding.tscn" id="2_x3g72"]
+
+[sub_resource type="Gradient" id="Gradient_u73b7"]
+colors = PackedColorArray(0, 0.853396, 0.297606, 1, 0.675646, 0.318466, 0.100952, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7n8rm"]
+gradient = SubResource("Gradient_u73b7")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f5fkf"]
+radius = 8.0
+
+[node name="BeeEater" type="CharacterBody2D"]
+script = ExtResource("1_82b2p")
+
+[node name="Health" parent="." instance=ExtResource("1_13jvs")]
+
+[node name="PathFinding" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("2_x3g72")]
+parent = NodePath("..")
+refresh_rate = 0.1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.0625, 16)
+texture = SubResource("GradientTexture1D_7n8rm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_f5fkf")

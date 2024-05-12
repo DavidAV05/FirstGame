@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bwe8b1isyf17s"]
 
-[ext_resource type="Script" path="res://game/Characters/Player/player.gd" id="1_tljv3"]
-[ext_resource type="PackedScene" uid="uid://sxfx55gr086y" path="res://game/Components/Inventory/Inventory.tscn" id="2_gxj7d"]
+[ext_resource type="Script" path="res://game/Characters/Player/player.gd" id="1_b8juk"]
+[ext_resource type="PackedScene" uid="uid://sxfx55gr086y" path="res://game/Components/Inventory.tscn" id="2_gxj7d"]
 [ext_resource type="Texture2D" uid="uid://b7oh7p53cosnf" path="res://assets/characters/bee/Bee_sprite_basic.png" id="2_x3g64"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_js6aq"]
@@ -9,9 +9,11 @@ size = Vector2(16, 12)
 
 [node name="player" type="CharacterBody2D"]
 collision_mask = 2
-script = ExtResource("1_tljv3")
+script = ExtResource("1_b8juk")
 
 [node name="Inventory" parent="." instance=ExtResource("2_gxj7d")]
+unique_name_in_owner = true
+script = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_js6aq")

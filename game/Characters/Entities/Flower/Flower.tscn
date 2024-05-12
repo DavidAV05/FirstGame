@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://game/Characters/Entities/Flower/Flower.gd" id="1_m46ya"]
 [ext_resource type="Script" path="res://game/Characters/Entities/Flower/Pollenised.gd" id="2_0i0gt"]
-[ext_resource type="Script" path="res://game/Characters/Entities/Flower/FlowerStates.gd" id="2_jjdvn"]
+[ext_resource type="PackedScene" uid="uid://bmdeuatg682r2" path="res://game/Components/StateMachine/StateMachine.tscn" id="2_yx6vm"]
 [ext_resource type="Script" path="res://game/Characters/Entities/Flower/Depollenised.gd" id="3_jo4og"]
 
 [sub_resource type="CurveXYZTexture" id="CurveXYZTexture_qyx2u"]
@@ -25,20 +25,16 @@ collision_layer = 4
 position = Vector2(6, 4)
 shape = SubResource("CircleShape2D_8lpfa")
 
-[node name="FlowerStates" type="Node2D" parent="." node_paths=PackedStringArray("INITIAL_STATE")]
-script = ExtResource("2_jjdvn")
-INITIAL_STATE = NodePath("Pollenised")
+[node name="FlowerStates" parent="." instance=ExtResource("2_yx6vm")]
 
-[node name="Depollenised" type="Node2D" parent="FlowerStates"]
+[node name="Depollenised2" type="Node2D" parent="FlowerStates"]
 script = ExtResource("3_jo4og")
 
-[node name="PolleniseTimer" type="Timer" parent="FlowerStates/Depollenised"]
+[node name="PolleniseTimer" type="Timer" parent="FlowerStates/Depollenised2"]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="Pollenised" type="Node2D" parent="FlowerStates"]
+[node name="Pollenised2" type="Node2D" parent="FlowerStates"]
 script = ExtResource("2_0i0gt")
 
-[connection signal="body_entered" from="Hitbox" to="FlowerStates/Pollenised" method="_on_hitbox_body_entered"]
-[connection signal="timeout" from="FlowerStates/Depollenised/PolleniseTimer" to="FlowerStates/Depollenised" method="_on_pollenise_timer_timeout"]
-[connection signal="Pollen_Add" from="FlowerStates/Pollenised" to="." method="_on_pollenised_pollen_add"]
+[connection signal="timeout" from="FlowerStates/Depollenised2/PolleniseTimer" to="FlowerStates/Depollenised2" method="_on_pollenise_timer_timeout"]

@@ -9,7 +9,7 @@ class_name Player
 @onready var camera = %Camera2D
 @onready var camera_lag = camera.position_smoothing_enabled
 @onready var camera_lag_speed = camera.position_smoothing_speed
-@onready var inventory : Inventory = %Inventory
+@onready var inventory : Inventory = $Inventory
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -33,15 +33,21 @@ func basic_movement(delta: float) -> void:
 
 
 func friction(delta: float) -> void:
-	var direction := velocity.normalized()
-	var friction := (direction * velocity.length() * delta) / 0.3
-	velocity -= friction
-	print(friction)
+	if velocity.length() > 10:
+		var direction := velocity.normalized()
+		var friction := (direction * velocity.length() * delta) / 0.3
+		velocity -= friction
+		print(friction)
+	else:
+		velocity = Vector2(0, 0)
+
 
 
 func _physics_process(delta: float) -> void:
 	# Defining max speed
-	print(inventory.pollen_count)
+	if inventory:
+		print("Pollen:", inventory.get_total_pollen(), "\n")
+
 	velocity = velocity.limit_length(MAX_SPEED)
 
 	if Input.is_action_pressed("move"):

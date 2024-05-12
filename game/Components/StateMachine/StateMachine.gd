@@ -1,4 +1,5 @@
 extends Node2D
+class_name StateMachine
 
 @export var INITIAL_STATE : State
 
@@ -22,7 +23,6 @@ func _ready():
 func _process(delta):
 	if CURRENT_STATE:
 		CURRENT_STATE.physics_update(delta)
-		print(CURRENT_STATE.name)
 
 func on_child_transition(old_state, new_state_name):
 	if old_state != CURRENT_STATE:

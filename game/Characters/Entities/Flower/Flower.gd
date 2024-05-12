@@ -1,2 +1,2 @@
-extends Interactable
-
+extends Node2D
+class_name Flower
