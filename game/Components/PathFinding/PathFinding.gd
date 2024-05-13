@@ -14,6 +14,7 @@ class_name PathFinding
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_set_target_position()
+	timer.wait_time = refresh_rate
 
 
 func get_direction() -> Vector2:

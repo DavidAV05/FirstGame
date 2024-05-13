@@ -6,6 +6,7 @@
 script = ExtResource("1_6p88k")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true
 
 [node name="RefreshRate" type="Timer" parent="."]
 autostart = true
