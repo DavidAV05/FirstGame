@@ -14,13 +14,15 @@ gradient = SubResource("Gradient_u73b7")
 radius = 8.0
 
 [node name="BeeEater" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_82b2p")
 
 [node name="Health" parent="." instance=ExtResource("1_13jvs")]
 
 [node name="PathFinding" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("2_x3g72")]
 parent = NodePath("..")
-refresh_rate = 0.1
+refresh_rate = 0.25
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.0625, 16)
