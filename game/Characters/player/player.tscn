@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bwe8b1isyf17s"]
 
-[ext_resource type="Script" path="res://game/Characters/Player/player.gd" id="1_tljv3"]
+[ext_resource type="Script" path="res://game/Characters/player/player.gd" id="1_tljv3"]
 [ext_resource type="PackedScene" uid="uid://sxfx55gr086y" path="res://game/Components/Inventory/Inventory.tscn" id="2_gxj7d"]
 [ext_resource type="Texture2D" uid="uid://b7oh7p53cosnf" path="res://assets/characters/bee/Bee_sprite_basic.png" id="2_x3g64"]
 
