@@ -35,9 +35,9 @@ func basic_movement(delta: float) -> void:
 func friction(delta: float) -> void:
 	if velocity.length() > 10:
 		var direction := velocity.normalized()
-		var friction := (direction * velocity.length() * delta) / 0.3
-		velocity -= friction
-		print(friction)
+		var current_friction := (direction * velocity.length() * delta) / 0.3
+		velocity -= current_friction
+		print(current_friction)
 	else:
 		velocity = Vector2(0, 0)
 
