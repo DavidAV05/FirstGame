@@ -9,7 +9,7 @@ var CURRENT_STATE : State
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for child in get_children():
+	for child in self.get_children():
 		if child is State:
 			states[child.name.to_lower()] = child
 			child.Transition.connect(on_child_transition)
@@ -19,10 +19,14 @@ func _ready():
 		CURRENT_STATE = INITIAL_STATE	
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	print("Wazzup, state machine here.")
+	for state in states:
+		print("States ", state)
 	if CURRENT_STATE:
-		CURRENT_STATE.physics_update(delta)
+		print(CURRENT_STATE.name)
+		CURRENT_STATE.update(delta)
+
 
 func on_child_transition(old_state, new_state_name):
 	if old_state != CURRENT_STATE:

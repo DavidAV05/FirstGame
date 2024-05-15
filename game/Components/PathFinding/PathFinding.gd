@@ -2,9 +2,8 @@ extends Node2D
 class_name PathFinding
 
 # Set via parent script.
-@onready var nav_region : NavigationRegion2D
-@onready var target : Node2D
 
+@export var target : Node2D
 @export var parent : Node2D
 @export var refresh_rate : float
 
@@ -26,6 +25,9 @@ func get_direction() -> Vector2:
 func change_target(new_target : Node2D) -> void:
 	target = new_target
 	_set_target_position()
+
+func get_nav_agent() -> NavigationAgent2D:
+	return nav_agent
 
 
 func _set_target_position() -> void:

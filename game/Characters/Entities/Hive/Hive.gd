@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var inventory : Inventory = $Inventory
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if inventory:
 		print("Hive inventory:", inventory.get_total_pollen())
 

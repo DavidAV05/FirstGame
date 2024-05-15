@@ -25,16 +25,18 @@ collision_layer = 4
 position = Vector2(6, 4)
 shape = SubResource("CircleShape2D_8lpfa")
 
-[node name="FlowerStates" parent="." instance=ExtResource("2_yx6vm")]
+[node name="FlowerStates" parent="." node_paths=PackedStringArray("INITIAL_STATE") instance=ExtResource("2_yx6vm")]
+INITIAL_STATE = NodePath("Pollenised")
 
-[node name="Depollenised2" type="Node2D" parent="FlowerStates"]
+[node name="Depollenised" type="Node2D" parent="FlowerStates"]
 script = ExtResource("3_jo4og")
 
-[node name="PolleniseTimer" type="Timer" parent="FlowerStates/Depollenised2"]
+[node name="PolleniseTimer" type="Timer" parent="FlowerStates/Depollenised"]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="Pollenised2" type="Node2D" parent="FlowerStates"]
+[node name="Pollenised" type="Node2D" parent="FlowerStates"]
 script = ExtResource("2_0i0gt")
 
-[connection signal="timeout" from="FlowerStates/Depollenised2/PolleniseTimer" to="FlowerStates/Depollenised2" method="_on_pollenise_timer_timeout"]
+[connection signal="body_entered" from="Hitbox" to="FlowerStates/Pollenised" method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="FlowerStates/Depollenised/PolleniseTimer" to="FlowerStates/Depollenised" method="_on_pollenise_timer_timeout"]

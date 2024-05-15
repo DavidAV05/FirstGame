@@ -14,4 +14,3 @@ func remove_pollen(n_pollen: int) -> void:
 
 func get_total_pollen() -> int:
 	return _TOTAL_POLLEN
-	print("test")

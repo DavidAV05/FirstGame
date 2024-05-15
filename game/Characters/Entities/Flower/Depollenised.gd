@@ -18,6 +18,9 @@ func exit():
 	CURRENT_STATE = false
 	pass
 
+func update(_delta):
+	pass
+
 func _on_pollenise_timer_timeout():
 	if CURRENT_STATE:
 		Transition.emit(self, "Pollenised")
