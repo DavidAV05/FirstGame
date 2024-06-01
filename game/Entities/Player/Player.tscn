@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=3 uid="uid://cslkp3q7qa57g"]
+
+[ext_resource type="Script" path="res://game/Entities/Player/Player.gd" id="1_v4pfp"]
+[ext_resource type="Texture2D" uid="uid://drqbk2sd3lf8t" path="res://assets/critters/boar/boar_SE_idle_0.png" id="2_o347m"]
+[ext_resource type="Texture2D" uid="uid://b8cnkpc1ds1rd" path="res://assets/critters/boar/boar_SE_idle_1.png" id="3_n1k48"]
+[ext_resource type="Texture2D" uid="uid://6f4bw7dd4int" path="res://assets/critters/boar/boar_SE_idle_2.png" id="4_po2em"]
+[ext_resource type="Texture2D" uid="uid://k0rmwstqhm66" path="res://assets/critters/boar/boar_SE_idle_3.png" id="5_14cmh"]
+[ext_resource type="Texture2D" uid="uid://by8olluwryfd0" path="res://assets/critters/boar/boar_SE_idle_4.png" id="6_ef1wl"]
+[ext_resource type="Texture2D" uid="uid://dnhv2o55sgbmt" path="res://assets/critters/boar/boar_SE_idle_5.png" id="7_oyv5o"]
+[ext_resource type="Texture2D" uid="uid://1g8fxlgkgndo" path="res://assets/critters/boar/boar_SE_idle_6.png" id="8_ma8ay"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wjhii"]
+radius = 7.0
+height = 14.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_naflu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_o347m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_n1k48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_po2em")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_14cmh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ef1wl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_oyv5o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ma8ay")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 6.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+motion_mode = 1
+script = ExtResource("1_v4pfp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_wjhii")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_naflu")
+animation = &"Idle"
+frame_progress = 0.22196
+metadata/_edit_lock_ = true
