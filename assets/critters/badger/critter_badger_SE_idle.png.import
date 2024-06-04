@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cd44adwsn3oqu"
-path="res://.godot/imported/critter_badger_SE_idle.png-635395644666d2b40d23a399d155e35f.ctex"
+path="res://.godot/imported/critter_badger_SE_idle.png-8825ba25f8c51a62218c1a0d77bc07d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/critters/badger/critter_badger_SE_idle.png"
-dest_files=["res://.godot/imported/critter_badger_SE_idle.png-635395644666d2b40d23a399d155e35f.ctex"]
+source_file="res://Assets/Critters/badger/critter_badger_SE_idle.png"
+dest_files=["res://.godot/imported/critter_badger_SE_idle.png-8825ba25f8c51a62218c1a0d77bc07d2.ctex"]
 
 [params]
 

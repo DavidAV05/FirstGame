@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://rvfehniismlv"]
 
-[ext_resource type="Texture2D" uid="uid://de4j8wxv6h7y4" path="res://assets/tile_set/spritesheet.png" id="1_5lkrf"]
-[ext_resource type="Script" path="res://game/Tilemaps/TileMap.gd" id="2_5ljn4"]
+[ext_resource type="Texture2D" uid="uid://de4j8wxv6h7y4" path="res://Assets/tile_set/spritesheet.png" id="1_5lkrf"]
+[ext_resource type="Script" path="res://Game/Tilemaps/TileMap.gd" id="2_5ljn4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tpam2"]
 texture = ExtResource("1_5lkrf")

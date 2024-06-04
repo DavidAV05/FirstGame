@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b5av51ey5hrao"
-path="res://.godot/imported/wolf-death.png-b43359bde093315f4d55787ca49bbc60.ctex"
+path="res://.godot/imported/wolf-death.png-11ad2090fb9621b170ce3687c02f243b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/critters/wolf/wolf-death.png"
-dest_files=["res://.godot/imported/wolf-death.png-b43359bde093315f4d55787ca49bbc60.ctex"]
+source_file="res://Assets/Critters/wolf/wolf-death.png"
+dest_files=["res://.godot/imported/wolf-death.png-11ad2090fb9621b170ce3687c02f243b.ctex"]
 
 [params]
 

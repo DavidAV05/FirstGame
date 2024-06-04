@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b87ffnaxsfv0r"
-path="res://.godot/imported/critter_badger_SE_tunnel.png-57f719c4cf36d45d53761f7bbe6cfe11.ctex"
+path="res://.godot/imported/critter_badger_SE_tunnel.png-2bffe3aed253a3c3513dd78b26e867a3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/critters/badger/critter_badger_SE_tunnel.png"
-dest_files=["res://.godot/imported/critter_badger_SE_tunnel.png-57f719c4cf36d45d53761f7bbe6cfe11.ctex"]
+source_file="res://Assets/Critters/badger/critter_badger_SE_tunnel.png"
+dest_files=["res://.godot/imported/critter_badger_SE_tunnel.png-2bffe3aed253a3c3513dd78b26e867a3.ctex"]
 
 [params]
 

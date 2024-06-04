@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://t1krtq411vmw"
-path="res://.godot/imported/critter_stag_NE_idle.png-43ccde0b556620e01ff98b898670d93b.ctex"
+path="res://.godot/imported/critter_stag_NE_idle.png-1e624c338233d7679c504315b60664c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/critters/stag/critter_stag_NE_idle.png"
-dest_files=["res://.godot/imported/critter_stag_NE_idle.png-43ccde0b556620e01ff98b898670d93b.ctex"]
+source_file="res://Assets/Critters/stag/critter_stag_NE_idle.png"
+dest_files=["res://.godot/imported/critter_stag_NE_idle.png-1e624c338233d7679c504315b60664c5.ctex"]
 
 [params]
 

@@ -11,12 +11,12 @@ config_version=5
 [application]
 
 config/name="FirstGame"
-run/main_scene="res://game/levels/main_level/Main.tscn"
+run/main_scene="res://Game/Levels/MainLevel/Main.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 
 [autoload]
 
-Isometric="*res://game/Scripts/Singletons/Isometric.gd"
+TilemapData="*res://game/Scripts/Singletons/TilemapData.gd"
 
 [display]
 
@@ -84,7 +84,7 @@ dash={
 
 2d_render/layer_1="Player"
 2d_render/layer_2="World"
-2d_render/layer_3="Entities"
+2d_render/layer_3="Objects"
 2d_physics/layer_1="World"
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Entities"

@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://b86husuqd63fq"]
+
+[ext_resource type="Script" path="res://Game/Entities/Boulder/Boulder.gd" id="1_y0csj"]
+
+[node name="Boulder" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_y0csj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(32, 0, 0, -16, -32, 0, 0, 16)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 24)
+collide_with_areas = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
